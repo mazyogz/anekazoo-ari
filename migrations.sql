@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS animals (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    class VARCHAR(50) NOT NULL,
+    legs INT NOT NULL
+);
