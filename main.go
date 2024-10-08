@@ -149,8 +149,11 @@ func GetAnimalByID(w http.ResponseWriter, r *http.Request) {
 	query := `SELECT id, name, class, legs FROM animals WHERE id = $1`
 	err := db.QueryRow(query, id).Scan(&animal.ID, &animal.Name, &animal.Class, &animal.Legs)
 
-	if err != nil {
+	if err == sql.ErrNoRows {
 		http.Error(w, "Animal not found", http.StatusNotFound)
+		return
+	} else if err != nil {
+		http.Error(w, "Could not fetch animal", http.StatusInternalServerError)
 		return
 	}
 
